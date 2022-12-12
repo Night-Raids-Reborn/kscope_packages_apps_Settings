@@ -119,6 +119,7 @@ public class NetworkDashboardFragment extends DashboardFragment implements
         }
         controllers.add(privateDnsPreferenceController);
         controllers.add(new NetworkProviderCallsSmsController(context, lifecycle));
+        controllers.add(new ActiveSimPreferenceController(context));
         return controllers;
     }
 
