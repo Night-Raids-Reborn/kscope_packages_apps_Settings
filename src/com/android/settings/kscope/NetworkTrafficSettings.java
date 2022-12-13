@@ -28,6 +28,8 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.os.Handler;
+import java.net.InetAddress;
 
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -51,12 +53,16 @@ import java.util.Collections;
 
 import ink.kaleidoscope.support.preferences.SystemSettingSwitchPreference;
 import ink.kaleidoscope.support.preferences.SystemSettingMainSwitchPreference;
+import ink.kaleidoscope.support.preferences.SystemPropSwitchPreference;
 
 public class NetworkTrafficSettings extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener {
 
     private SystemSettingSwitchPreference mThreshold;
     private SystemSettingMainSwitchPreference mNetMonitor;
+    private static final String PREF_ADBLOCK = "persist.aicp.hosts_block";
+
+    private Handler mHandler = new Handler();
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -77,6 +83,7 @@ public class NetworkTrafficSettings extends SettingsPreferenceFragment implement
         mThreshold = (SystemSettingSwitchPreference) findPreference("network_traffic_autohide_threshold");
         mThreshold.setChecked(isThresholdEnabled);
         mThreshold.setOnPreferenceChangeListener(this);
+        findPreference(PREF_ADBLOCK).setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -94,6 +101,16 @@ public class NetworkTrafficSettings extends SettingsPreferenceFragment implement
             Settings.System.putIntForUser(getContentResolver(),
                     Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, value ? 1 : 0,
                     UserHandle.USER_CURRENT);
+            return true;
+        }  else if (PREF_ADBLOCK.equals(preference.getKey())) {
+            // Flush the java VM DNS cache to re-read the hosts file.
+            // Delay to ensure the value is persisted before we refresh
+            mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        InetAddress.clearDnsCache();
+                    }
+            }, 1000);
             return true;
         }
         return false;

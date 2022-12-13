@@ -13661,4 +13661,8 @@
     <!-- pocket -->
     <string name="pocket_judge_title">Pocket detection</string>
     <string name="pocket_judge_summary">Block screen and button inputs when device is in pocket</string>
+
+    <!-- ad-blocker -->
+    <string name="hosts_block_title">Ad-block</string>
+    <string name="hosts_block_summary">Block ads with a modified hosts file. Turn off to use third party solutions or if apps cause issues.</string>
 </resources>

@@ -5590,4 +5590,7 @@
     <string name="active_sim_one">Hanya yang pertama</string>
     <string name="active_sim_two">Hanya yang kedua</string>
     <string name="active_sim_none">Keduanya dimatikan</string>
+    <!-- ad-blocker -->
+    <string name="hosts_block_title">Blokir Iklan</string>
+    <string name="hosts_block_summary">Blokir iklan dengan file host yang dimodifikasi. Matikan untuk menggunakan solusi pihak ketiga atau jika app menyebabkan masalah.</string>
 </resources>

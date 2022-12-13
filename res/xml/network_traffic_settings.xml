@@ -34,4 +34,10 @@
             android:dependency="network_traffic_state"
             android:defaultValue="false" />
     </PreferenceCategory>
+
+    <ink.kaleidoscope.support.preferences.SystemPropSwitchPreference
+        android:key="persist.aicp.hosts_block"
+        android:title="@string/hosts_block_title"
+        android:summary="@string/hosts_block_summary"
+        android:defaultValue="false" />
 </PreferenceScreen>
